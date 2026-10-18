@@ -1,0 +1,22 @@
+modLoader = "lowcodefml"
+loaderVersion = "[1,)"
+license = "MIT"
+
+[[mods]]
+modId = "yurumc_meadowfix"
+version = "1.0.0"
+displayName = "YuruMC Meadow ID Fix"
+authors = "Noa Himesaka"
+description = '''
+Keeps Meadow from renaming its legacy registry IDs so client and server registries match.
+'''
+
+[[mixins]]
+config = "yurumc_meadowfix.mixins.json"
+
+[[dependencies.yurumc_meadowfix]]
+modId = "meadow"
+type = "required"
+versionRange = "[1.4.9,)"
+ordering = "NONE"
+side = "BOTH"

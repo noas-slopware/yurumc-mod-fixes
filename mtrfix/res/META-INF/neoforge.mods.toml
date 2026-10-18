@@ -1,0 +1,23 @@
+modLoader = "lowcodefml"
+loaderVersion = "[1,)"
+license = "MIT"
+
+[[mods]]
+modId = "yurumc_liftfix"
+version = "1.1.0"
+displayName = "YuruMC MTR Fixes"
+authors = "Noa Himesaka"
+credits = "Lift cabin model ported from Minecraft Transit Railway 4.0.6 ModelLift1 (MIT, Minecraft-Transit-Railway)"
+description = '''
+Fixes for Minecraft Transit Railway 4.1.0-beta.2 on NeoForge 1.21.1: restores lift cabin rendering, and syncs block entity changes (lift button links, PIDS/sign settings) to clients again.
+'''
+
+[[mixins]]
+config = "yurumc_liftfix.mixins.json"
+
+[[dependencies.yurumc_liftfix]]
+modId = "mtr"
+type = "required"
+versionRange = "[4.1.0-beta.2]"
+ordering = "AFTER"
+side = "BOTH"

@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "tech.funami.yurumc.liftfix.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "BlockEntityExtensionMixin"
+  ],
+  "client": [
+    "RenderLiftsMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
