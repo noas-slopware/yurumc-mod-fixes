@@ -1,0 +1,31 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "tech.funami.yurumc.airwavesfix.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "DeviceBlockMixin",
+    "DimensionalRelayBEMixin",
+    "NetMixin",
+    "PortableRadioItemMixin",
+    "RadioBlockMixin",
+    "RadioConsoleBlockMixin",
+    "RadioNetworkAccessor",
+    "RadioNetworkMixin",
+    "SoundCaptureMixin",
+    "TapeItemMixin",
+    "TapePlayerBEMixin",
+    "TapePlayerMenuMixin",
+    "VoicechatPluginMixin"
+  ],
+  "client": [
+    "client.AirwavesPonderPluginMixin",
+    "client.ClientInitMixin",
+    "client.RadioSoundsMixin",
+    "client.TapePlayerScreenMixin",
+    "client.VoiceClientMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

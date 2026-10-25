@@ -1,0 +1,7 @@
+{
+  "screen.yurumc_airwavesfix.radio_settings": "Radio Settings",
+  "screen.yurumc_airwavesfix.radio_settings.volume": "Radios: %s",
+  "screen.yurumc_airwavesfix.radio_settings.mute": "Mute all radios",
+  "screen.yurumc_airwavesfix.radio_settings.unmute": "Unmute radios",
+  "gui.yurumc_airwavesfix.tape_player.disc": "Music disc to record (vanilla or Etched)"
+}
