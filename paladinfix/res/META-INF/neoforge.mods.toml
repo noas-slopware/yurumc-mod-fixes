@@ -1,0 +1,29 @@
+modLoader = "lowcodefml"
+loaderVersion = "[1,)"
+license = "MIT"
+
+[[mods]]
+modId = "yurumc_paladinfix"
+version = "1.0.0"
+displayName = "YuruMC Paladin's Furniture Item Fix"
+authors = "Noa Himesaka"
+description = '''
+Paladin's Furniture items render again when Forgified Fabric API's renderer handles them (Sinytra Connector packs).
+'''
+
+[[mixins]]
+config = "yurumc_paladinfix.mixins.json"
+
+[[dependencies.yurumc_paladinfix]]
+modId = "pfm"
+type = "required"
+versionRange = "[1.5.0]"
+ordering = "AFTER"
+side = "CLIENT"
+
+[[dependencies.yurumc_paladinfix]]
+modId = "fabric_renderer_api_v1"
+type = "required"
+versionRange = "*"
+ordering = "AFTER"
+side = "CLIENT"

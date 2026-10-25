@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "tech.funami.yurumc.hypertubefix.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "JunctionDirectionUtilsMixin",
+    "MoveDirectionMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

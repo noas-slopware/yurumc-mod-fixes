@@ -1,0 +1,22 @@
+modLoader = "lowcodefml"
+loaderVersion = "[1,)"
+license = "MIT"
+
+[[mods]]
+modId = "yurumc_hypertubefix"
+version = "1.0.0"
+displayName = "YuruMC Hypertube Junction Fix"
+authors = "Noa Himesaka"
+description = '''
+Stops Create: Hypertube 0.6.0 from crashing the server when a traveller reaches a junction moving straight up or down.
+'''
+
+[[mixins]]
+config = "yurumc_hypertubefix.mixins.json"
+
+[[dependencies.yurumc_hypertubefix]]
+modId = "create_hypertube"
+type = "required"
+versionRange = "[0.6.0]"
+ordering = "AFTER"
+side = "BOTH"

@@ -1,7 +1,7 @@
 # YuruMC mod fixes
 
-Small NeoForge 1.21.1 fix mods for the New YuruMC Modded pack. The Meadow and MTR fixes are code-less
-(`lowcodefml`) mods that only ship mixins; the Airwaves one is a regular (`javafml`) mod. AI-assisted; tested in
+Small NeoForge 1.21.1 fix mods for the New YuruMC Modded pack. The Meadow, MTR, Paladin's Furniture and Hypertube
+fixes are code-less (`lowcodefml`) mods that only ship mixins; the Airwaves one is a regular (`javafml`) mod. AI-assisted; tested in
 that pack, not much beyond it.
 
 ## `yurumc_meadowfix` — Meadow ID fix (1.0.0)
@@ -62,17 +62,44 @@ to it, since the mixins target that exact build). Etched 5.1 is optional. Instal
   It now makes 1.
 - Lang, Ponder and Field Manual text no longer mention microphones or voice chat.
 
+## `yurumc_paladinfix` — Paladin's Furniture item fix (1.0.0)
+
+For Paladin's Furniture **1.5.0** (NeoForge) in a pack with Sinytra Connector / Forgified Fabric API. Client only;
+harmless on a server.
+
+Paladin's furniture models hand out their item quads only through NeoForge's `getRenderPasses(ItemStack, boolean)`;
+plain `getQuads` is empty. When a Fabric model wrapper (e.g. Continuity) makes Forgified Fabric API's Indigo
+renderer draw the item, Indigo calls `emitItemQuads`, whose default encodes plain `getQuads`, so every furniture
+item is invisible in inventories, JEI and the hand
+([Paladin's Furniture#210](https://github.com/UnlikePaladin/paladins-furniture/issues/210)).
+`PFMNeoForgeBakedModelMixin` gives Paladin's base model an `emitItemQuads` that emits each of its render passes.
+
+## `yurumc_hypertubefix` — Create: Hypertube junction fix (1.0.0)
+
+For Create: Hypertube **0.6.0** (the dependency is pinned to it). Install on server and clients.
+
+A junction routes a traveller relative to the direction of the last tube segment, which is UP or DOWN for an
+entrance placed while looking up or down, or a tube that reaches the junction vertically. Routing then asks for
+the left/right of that direction with `Direction#getClockWise`, which throws for vertical directions: the
+`IllegalStateException` in the entrance's block entity tick crashes the server (the client runs the same code to
+draw the exit arrows). `JunctionDirectionUtilsMixin` routes a vertical arrival relative to the junction's own
+(always horizontal) facing, and `MoveDirectionMixin` makes left/right of a vertical direction go straight on instead
+of throwing, for any other caller.
+
 ## Building
 
 ```sh
 ./build.sh meadowfix   # -> build/yurumc-meadowfix-<version>.jar
 ./build.sh mtrfix      # -> build/yurumc-mtrfix-<version>.jar
 ./build.sh airwavesfix # -> build/yurumc-airwavesfix-<version>.jar
+./build.sh paladinfix  # -> build/yurumc-paladinfix-<version>.jar
+./build.sh hypertubefix # -> build/yurumc-hypertubefix-<version>.jar
 ```
 
 `build.sh` compiles against a local Prism Launcher install: Minecraft 1.21.1 (mojmap) and its libraries,
-NeoForge 21.1.262 (for the bundled MixinExtras, and in full for `airwavesfix`), sponge-mixin, and the target
-mods' jars from the New YuruMC Modded instance (MTR; Airwaves, Create and Etched). Override `PRISM`, `INSTANCE`
+NeoForge 21.1.262 (for the bundled MixinExtras, and in full for `airwavesfix`, `paladinfix` and `hypertubefix`),
+sponge-mixin, and the target mods' jars from the New YuruMC Modded instance (MTR; Airwaves, Create and Etched;
+Paladin's Furniture and Forgified Fabric API; Create: Hypertube and Create). Override `PRISM`, `INSTANCE`
 and `JAVA_BIN` (a JDK 21+) as needed.
 
 ## License
