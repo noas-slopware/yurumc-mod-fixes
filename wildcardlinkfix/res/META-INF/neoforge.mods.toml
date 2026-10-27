@@ -1,0 +1,22 @@
+modLoader = "lowcodefml"
+loaderVersion = "[1,)"
+license = "MIT"
+
+[[mods]]
+modId = "yurumc_wildcardlinkfix"
+version = "1.0.0"
+displayName = "YuruMC Wildcard Link Unload Fix"
+authors = "Noa Himesaka"
+description = '''
+Stops Create Connected 1.3.3 from signalling a redstone link that is already removed, which deadlocked the server when an AeroEngine afterburner's chunk unloaded.
+'''
+
+[[mixins]]
+config = "yurumc_wildcardlinkfix.mixins.json"
+
+[[dependencies.yurumc_wildcardlinkfix]]
+modId = "create_connected"
+type = "required"
+versionRange = "[1.3.3-mc1.21.1]"
+ordering = "AFTER"
+side = "BOTH"

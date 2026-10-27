@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "tech.funami.yurumc.wildcardlinkfix.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "LinkWildcardNetworkHandlerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

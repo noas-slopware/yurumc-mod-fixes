@@ -1,7 +1,7 @@
 # YuruMC mod fixes
 
-Small NeoForge 1.21.1 fix mods for the New YuruMC Modded pack. The Meadow, MTR, Paladin's Furniture and Hypertube
-fixes are code-less (`lowcodefml`) mods that only ship mixins; the Airwaves one is a regular (`javafml`) mod. AI-assisted; tested in
+Small NeoForge 1.21.1 fix mods for the New YuruMC Modded pack. The Meadow, MTR, Paladin's Furniture, Hypertube and
+wildcard link fixes are code-less (`lowcodefml`) mods that only ship mixins; the Airwaves one is a regular (`javafml`) mod. AI-assisted; tested in
 that pack, not much beyond it.
 
 ## `yurumc_meadowfix` — Meadow ID fix (1.0.0)
@@ -86,6 +86,18 @@ draw the exit arrows). `JunctionDirectionUtilsMixin` routes a vertical arrival r
 (always horizontal) facing, and `MoveDirectionMixin` makes left/right of a vertical direction go straight on instead
 of throwing, for any other caller.
 
+## `yurumc_wildcardlinkfix` — Create Connected wildcard link unload fix (1.0.0)
+
+For Create Connected **1.3.3** (the dependency is pinned to it). Only does anything on the server; harmless on clients.
+
+When the last link on a frequency leaves the network, Create Connected's wildcard handler tells the leaving link its
+power is now 0. Links leave from `invalidate()`, which Create's `SmartBlockEntity` runs after `setRemoved()`, so on a
+chunk unload that signal reaches a block entity that is already removed. An AeroEngine afterburner with a frequency
+set answers it by looking up its airflow nozzle with `getBlockState`, which asks C2ME for the very chunk the server
+thread is unloading. The server thread then waits for that chunk forever: no crash, no watchdog, players can't join
+and spark logs "Timed out waiting for world statistics" every minute. `LinkWildcardNetworkHandlerMixin` only sends
+that signal to a link that is still alive, so a live receiver whose frequency changed is still zeroed.
+
 ## Building
 
 ```sh
@@ -94,12 +106,14 @@ of throwing, for any other caller.
 ./build.sh airwavesfix # -> build/yurumc-airwavesfix-<version>.jar
 ./build.sh paladinfix  # -> build/yurumc-paladinfix-<version>.jar
 ./build.sh hypertubefix # -> build/yurumc-hypertubefix-<version>.jar
+./build.sh wildcardlinkfix # -> build/yurumc-wildcardlinkfix-<version>.jar
 ```
 
 `build.sh` compiles against a local Prism Launcher install: Minecraft 1.21.1 (mojmap) and its libraries,
-NeoForge 21.1.262 (for the bundled MixinExtras, and in full for `airwavesfix`, `paladinfix` and `hypertubefix`),
+NeoForge 21.1.262 (for the bundled MixinExtras, and in full for `airwavesfix`, `paladinfix`, `hypertubefix` and
+`wildcardlinkfix`),
 sponge-mixin, and the target mods' jars from the New YuruMC Modded instance (MTR; Airwaves, Create and Etched;
-Paladin's Furniture and Forgified Fabric API; Create: Hypertube and Create). Override `PRISM`, `INSTANCE`
+Paladin's Furniture and Forgified Fabric API; Create: Hypertube and Create; Create Connected and Create). Override `PRISM`, `INSTANCE`
 and `JAVA_BIN` (a JDK 21+) as needed.
 
 ## License

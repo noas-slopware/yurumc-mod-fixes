@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Build one of the fix mods: ./build.sh meadowfix|mtrfix|airwavesfix|paladinfix|hypertubefix
+# Build one of the fix mods: ./build.sh meadowfix|mtrfix|airwavesfix|paladinfix|hypertubefix|wildcardlinkfix
 # Compiles against the Minecraft 1.21.1 (mojmap) jars, NeoForge, the target mods and Mixin/MixinExtras from the
 # local Prism install.
 set -euo pipefail
 
-name=${1:?usage: build.sh meadowfix|mtrfix|airwavesfix|paladinfix|hypertubefix}
+name=${1:?usage: build.sh meadowfix|mtrfix|airwavesfix|paladinfix|hypertubefix|wildcardlinkfix}
 here=$(cd "$(dirname "$0")" && pwd)
 dir=$here/$name
 prism=${PRISM:-$HOME/.local/share/PrismLauncher}
@@ -20,6 +20,7 @@ case $name in
 	airwavesfix) jar_name=yurumc-airwavesfix-$version.jar ;;
 	paladinfix) jar_name=yurumc-paladinfix-$version.jar ;;
 	hypertubefix) jar_name=yurumc-hypertubefix-$version.jar ;;
+	wildcardlinkfix) jar_name=yurumc-wildcardlinkfix-$version.jar ;;
 	*) echo "unknown fix: $name" >&2; exit 1 ;;
 esac
 
@@ -105,6 +106,12 @@ if [[ $name == hypertubefix ]]; then
 	# Create: Hypertube, plus Create (its blocks extend Create's)
 	mods=$instance/mods
 	classpath=$(neoforge_cp):$(ls "$mods"/create_hypertube-*-NEOFORGE.jar):$mods/create-1.21.1-6.0.10.jar
+fi
+
+if [[ $name == wildcardlinkfix ]]; then
+	# Create Connected, plus Create (the link network) and MixinExtras
+	mods=$instance/mods
+	classpath=$(neoforge_cp):$(mixinextras):$mods/create_connected-1.3.3-mc1.21.1.jar:$mods/create-1.21.1-6.0.10.jar
 fi
 
 mkdir -p "$work/out" "$here/build"
