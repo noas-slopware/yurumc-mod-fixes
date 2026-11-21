@@ -74,9 +74,9 @@ item is invisible in inventories, JEI and the hand
 ([Paladin's Furniture#210](https://github.com/UnlikePaladin/paladins-furniture/issues/210)).
 `PFMNeoForgeBakedModelMixin` gives Paladin's base model an `emitItemQuads` that emits each of its render passes.
 
-## `yurumc_hypertubefix` — Create: Hypertube junction fix (1.0.0)
+## `yurumc_hypertubefix` — Create: Hypertube junction fix (1.1.0)
 
-For Create: Hypertube **0.6.0** (the dependency is pinned to it). Install on server and clients.
+For Create: Hypertube **0.6.1** (the dependency is pinned to it). Install on server and clients.
 
 A junction routes a traveller relative to the direction of the last tube segment, which is UP or DOWN for an
 entrance placed while looking up or down, or a tube that reaches the junction vertically. Routing then asks for
@@ -85,6 +85,10 @@ the left/right of that direction with `Direction#getClockWise`, which throws for
 draw the exit arrows). `JunctionDirectionUtilsMixin` routes a vertical arrival relative to the junction's own
 (always horizontal) facing, and `MoveDirectionMixin` makes left/right of a vertical direction go straight on instead
 of throwing, for any other caller.
+
+0.6.1's splitter HUD (`ClientTravelPathRender.renderOverlay`) labels the exit by comparing it with the arrival
+direction and its `getCounterClockWise()`, which throws on the render thread every frame after a vertical arrival.
+`ClientTravelPathRenderMixin` (client only) labels it relative to the junction's facing too, matching the routing.
 
 ## `yurumc_wildcardlinkfix` — Create Connected wildcard link unload fix (1.0.0)
 
